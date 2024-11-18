@@ -1,0 +1,85 @@
+---
+- name: Ensure Docker is installed and running on EC2 Instances
+  hosts: ec2_instances
+  become: yes
+
+  tasks:
+    - name: Update apt package index
+      apt:
+        update_cache: yes
+
+    - name: Install required packages
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+        state: present
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: "deb https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+        state: present
+
+    - name: Update apt package index after adding Docker repo
+      apt:
+        update_cache: yes
+
+    - name: Install Docker
+      apt:
+        name: docker-ce
+        state: present
+
+    - name: Ensure Docker service is started and enabled
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Check Docker service status
+      shell: systemctl is-active docker
+      register: docker_status
+
+    - name: Debug Docker status
+      debug:
+        msg: "Docker service status: {{ docker_status.stdout }}"
+
+    - name: Fail if Docker service is not running
+      fail:
+        msg: "Docker service is not running."
+      when: docker_status.stdout != "active"
+
+    - name: Install Docker SDK for Python
+      pip:
+        name: docker
+        state: present
+
+    - name: Add current user to the Docker group
+      user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: yes
+
+    - name: Log out and back in to refresh Docker group membership (manual step)
+      debug:
+        msg: "Please log out and back in for Docker group membership changes to take effect."
+
+    - name: Pull application Docker image
+      docker_image:
+        name: samaenany/todolist-depi-project
+        tag: latest
+        source: pull
+
+    - name: Run Docker container
+      docker_container:
+        name: my_app_todo
+        image: samaenany/todolist-depi-project
+        state: started
+        ports:
+          - "80:3000"
