@@ -1,14 +1,13 @@
 ![example workflow](<https://github.com/E-963/TODO-List-DevOps-Project/actions/workflows/pytest.yml/badge.svg>)  ![example workflow](<https://github.com/E-963/TODO-List-DevOps-Project/actions/workflows/docker-image.yml/badge.svg>) 
-
 ![alt text](image-1.png)
 
-# TODO APP DEVOPS PROJECT
+# FIRST DEVOPS PROJECT
 
 ## Development
 
 ### Intiallization Python App
 
-  > Step 1: Clone the Repository: (<https://github.com/E-963/TODO-List-DevOps-Project>)
+  > Step 1: Clone the Repository: (<https://github.com/E-963/1st-DevOps-Project>)
   
   > Step2: Bash Command for Creat a Virtual Environment
 
