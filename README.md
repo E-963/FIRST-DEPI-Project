@@ -1,4 +1,4 @@
-![example workflow](<https://github.com/E-963/TODO-List-DevOps-Project/actions/workflows/pytest.yml/badge.svg>)  ![example workflow](<https://github.com/E-963/TODO-List-DevOps-Project/actions/workflows/docker-image.yml/badge.svg>) 
+![example workflow](<https://github.com/E-963/TODO-List-DevOps-Project/actions/workflows/pytest.yml/badge.svg>)
 ![alt text](image-1.png)
 
 # TODO APP DEVOPS PROJECT
@@ -7,7 +7,7 @@
 
 ### Intiallization Python App
 
-  > Step 1: Clone the Repository: (<https://github.com/E-963/1st-DevOps-Project>)
+  > Step 1: Clone the Repository: (<https://github.com/E-963/TODO-List-DevOps-Project>)
   
   > Step2: Bash Command for Creat a Virtual Environment
 
@@ -145,7 +145,8 @@
 
     docker network ls
 
-## Docker Compose 
+## Docker Compose
+
     ansible-playbook dcompose.yml
 
 # DEPLOYMENT AND RELEASE (CI / CD )
@@ -179,7 +180,6 @@
 #### Using Ansible playbook pulls the samaenany/todolist-depi-project:latest Docker image from DockerHub and starts a container named my_app_container based on it, mapping port 8000 on localhost to port 8000 in the container by YAML script
 
 ### to run
-
 
     ansible-playbook site.yml
 
@@ -287,13 +287,13 @@ Install [Kubectl](https://kubernetes.io/docs/tasks/tools/) and [minikube](https:
 
     minikube start
 
- ## Pod and Namespace
-* ## Creates a Pod for the Python application in a namespace 
+## Pod and Namespace
+
+* ## Creates a Pod for the Python application in a namespace
 
     kubectl apply -f namespace.yaml -f pod.yaml
     kubectl get pods -n my-app-namespace
     kubectl describe pod my-app -n my-app-namespace
-
 
 ### Configure kubectl: Minikube comes with kubectl preconfigured to interact with the Minikube cluster. Verify that kubectl is configured correctly
 
@@ -310,18 +310,20 @@ Install [Kubectl](https://kubernetes.io/docs/tasks/tools/) and [minikube](https:
     kubectl apply -f service.yaml
     kubectl apply -f ingress.yaml
     kubectl apply -f role.yaml
-### to interact with a specific pod in a Kubernetes cluster.
+
+### to interact with a specific pod in a Kubernetes cluster
+
     kubectl get pod -n my-app-namespace
 
     kubectl describe pod  -n my-app-namespace
 
 ### when deploying on cloud, an external IP for the service will be available. For testing with minikube, run the following command to get a URL for accessing the service
+
     minikube -n my-app-namespace service app-service --url
 
 * # Create a Helm Chart
 
     Create a Helm Chart Structure:
-
 
     Use the helm create command to scaffold a new Helm chart:
 
@@ -361,13 +363,16 @@ You can add Prometheus and Grafana as dependencies in a Chart.yaml file or use H
   
     helm install grafana grafana/grafana --namespace my-app-namespace
 
- * ### Configure Prometheus to Scrape Application MetricsAccessing dashboard
+* ### Configure Prometheus to Scrape Application MetricsAccessing dashboard
 
- * ### For testing with minkube, metrics plugin should be added 
+* ### For testing with minkube, metrics plugin should be added
+
         minikube addons enable metrics-server
 
- * ### Use 'kubectl port-forward" to access Grafana’s UI:
+* ### Use 'kubectl port-forward" to access Grafana’s UI
+
        kubectl port-forward svc/monitoring-grafana 3000:80 -n monitoring
 
- * #### Access dashboards at http://localhost:3000/dashboards, default creds: admin:prom-operator
+* #### Access dashboards at <http://localhost:3000/dashboards>, default creds: admin:prom-operator
+
  ![alt text](<Screenshot from 2024-08-18 21-27-55.png>)
