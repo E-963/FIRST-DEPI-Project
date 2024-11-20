@@ -28,16 +28,12 @@
             uses: docker/login-action@v3
             with:
               username: ${{ secrets.DOCKERHUB_USERNAME }}
-              password: ${{ secrets.DOCKERHUB_PASSWORD }}
+              password: ${{ secrets.DOCKERHUB_PASSWORD}}
               ecr: false
               logout: true
     
-          # Build the Docker image
-          - name: Build Docker image
-            run: |
-              docker build -t your-dockerhub-samaenany/todolist-depi-project-name:latest .
-    
-          # Push the Docker image to Docker Hub
-          - name: Push Docker image
-            run: |
-              docker push your-dockerhub-samaenany/todolist-depi-project-name:latest
+          - name: Build and push
+            uses: docker/build-push-action@v4
+            with:
+              push: true
+              tags: ${{ secrets.DOCKERHUB_USERNAME }}/todolist-depi-project:latest
